@@ -37,7 +37,7 @@ public:
   z3::check_result check();
 
   bool checkAndSave(const std::string& postfix="");
-  void addJcc(ExprRef, bool, ADDRINT);
+  void addJcc(ExprRef, bool, ADDRINT, bool);
   void addAddr(ExprRef, ADDRINT);
   void addAddr(ExprRef, llvm::APInt);
   void addValue(ExprRef, ADDRINT);
@@ -85,7 +85,7 @@ protected:
   ExprRef getRangeConstraint(ExprRef e, bool is_unsigned);
 
   bool isInterestingJcc(ExprRef, bool, ADDRINT);
-  void negatePath(ExprRef, bool);
+  void negatePath(ExprRef, bool, bool);
   void solveOne(z3::expr);
 
   void checkFeasible();

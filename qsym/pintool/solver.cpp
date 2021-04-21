@@ -147,6 +147,7 @@ z3::check_result Solver::check() {
 }
 
 bool Solver::checkAndSave(const std::string& postfix) {
+  std::cerr << "checkAndSave\n";
   if (check() == z3::sat) {
     saveValues(postfix);
     return true;
@@ -157,7 +158,7 @@ bool Solver::checkAndSave(const std::string& postfix) {
   }
 }
 
-void Solver::addJcc(ExprRef e, bool taken, ADDRINT pc) {
+void Solver::addJcc(ExprRef e, bool taken, ADDRINT pc, bool should_solve) {
   // Save the last instruction pointer for debugging
   last_pc_ = pc;
 
@@ -183,7 +184,7 @@ void Solver::addJcc(ExprRef e, bool taken, ADDRINT pc) {
     is_interesting = isInterestingJcc(e, taken, pc);
 
   if (is_interesting)
-    negatePath(e, taken);
+    negatePath(e, taken, should_solve);
   addConstraint(e, taken, is_interesting);
 }
 
@@ -312,6 +313,7 @@ std::vector<UINT8> Solver::getConcreteValues() {
 }
 
 void Solver::saveValues(const std::string& postfix) {
+  std::cerr << "Saving values";
   std::vector<UINT8> values = getConcreteValues();
 
   // If no output directory is specified, then just print it out
@@ -515,11 +517,17 @@ bool Solver::isInterestingJcc(ExprRef rel_expr, bool taken, ADDRINT pc) {
   return interesting;
 }
 
-void Solver::negatePath(ExprRef e, bool taken) {
+void Solver::negatePath(ExprRef e, bool taken, bool should_save) {
   reset();
   syncConstraints(e);
   addToSolver(e, !taken);
-  bool sat = checkAndSave();
+
+  bool sat;
+  if (should_save) {
+      sat = checkAndSave();
+  } else {
+    sat = (check() == z3::sat);
+  }
   if (!sat) {
     reset();
     // optimistic solving

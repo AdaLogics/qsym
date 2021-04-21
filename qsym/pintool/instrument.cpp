@@ -2213,9 +2213,9 @@ instrumentJcc(ThreadContext* thread_ctx,
     ADDRINT pc = PIN_GetContextReg(ctx, REG_INST_PTR);
     LOG_DEBUG("Symbolic branch at " + hexstr(pc) + ": " + e->toString() + "\n");
 #ifdef CONFIG_TRACE
-    trace_addJcc(e, ctx, taken);
+    trace_addJcc(e, ctx, taken, true);
 #endif
-    g_solver->addJcc(e, taken, pc);
+    g_solver->addJcc(e, taken, pc, true);
   }
 }
 
