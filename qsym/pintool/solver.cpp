@@ -532,7 +532,9 @@ void Solver::negatePath(ExprRef e, bool taken, bool should_save) {
     reset();
     // optimistic solving
     addToSolver(e, !taken);
-    checkAndSave("optimistic");
+    if (should_save) {
+        checkAndSave("optimistic");
+    }
   }
 }
 
