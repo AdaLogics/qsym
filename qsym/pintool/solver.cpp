@@ -147,7 +147,7 @@ z3::check_result Solver::check() {
 }
 
 bool Solver::checkAndSave(const std::string& postfix) {
-  std::cerr << "checkAndSave\n";
+  //std::cerr << "checkAndSave\n";
   if (check() == z3::sat) {
     saveValues(postfix);
     return true;
