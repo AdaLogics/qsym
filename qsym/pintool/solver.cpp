@@ -526,7 +526,8 @@ void Solver::negatePath(ExprRef e, bool taken, bool should_save) {
   if (should_save) {
       sat = checkAndSave();
   } else {
-    sat = (check() == z3::sat);
+    //sat = (check() == z3::sat);
+    sat = true;
   }
   if (!sat) {
     reset();
