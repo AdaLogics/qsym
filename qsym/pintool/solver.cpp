@@ -109,7 +109,7 @@ Solver::Solver(
 
 void Solver::setTimeout(int timeout) {
     z3::params p(context_);
-    p.set(":timeout", timeout);
+    p.set(":timeout", (const unsigned)timeout);
     solver_.set(p);
 }
 
