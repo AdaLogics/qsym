@@ -99,9 +99,9 @@ Solver::Solver(
   , dep_forest_()
 {
   // Set timeout for solver
-  z3::params p(context_);
-  p.set(":timeout", kSolverTimeout);
-  solver_.set(p);
+  //z3::params p(context_);
+  //p.set(":timeout", kSolverTimeout);
+  //solver_.set(p);
 
   checkOutDir();
   readInput();
