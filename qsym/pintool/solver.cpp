@@ -107,6 +107,12 @@ Solver::Solver(
   readInput();
 }
 
+void Solver::setTimeout(int timeout) {
+    z3::params p(context_);
+    p.set(":timeout", timeout);
+    solver_.set(p);
+}
+
 void Solver::push() {
   solver_.push();
 }

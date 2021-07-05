@@ -36,6 +36,8 @@ public:
   void add(z3::expr expr);
   z3::check_result check();
 
+  void setTimeout(int timeout);
+
   bool checkAndSave(const std::string& postfix="");
   void addJcc(ExprRef, bool, ADDRINT, bool);
   void addAddr(ExprRef, ADDRINT);
